@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+<script src="{{ url_for('static', filename='Chart.bundle-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='chartkick.js') }}"></script>
+
+<h2 style="display:inline">{{title}}</h2>
+<div class="dropdown" style="display:inline">
+    <a id="ctMore" data-target="#" href="/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        其他类型
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="ctMore">
+        <li><a href="/customer/data">EMI大盘</a></li>
+        <li><a href="/customer/data/应用推荐">应用推荐</a></li>
+        <li><a href="/customer/data/信息流">信息流</a></li>
+        <li><a href="/customer/data/banner">banner</a></li>
+        <li><a href="/customer/data/其他">其他</a></li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <!-- Table -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <table class="table table-bordered table-hover" >
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th> 客户总数 </th>
+                        <th> 余额客户数 </th>
+                        <th> 余额客户占比 </th>
+                        <th> 推广客户数 </th>
+                        <th> 推广客户占比 </th>
+                        <th> 平均广告条数（客户） </th>
+                        <th> 在线广告总数 </th>
+                        <th> 平均广告消耗(元/条) </th>
+                        <th> 日收入(万) </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>总数</td>
+                        <td> {{data.total_cnt}} </td>
+                        <td> {{data.balance_cnt}} </td>
+                        <td> {{format_percent(data.balance_cnt,data.total_cnt)}} </td>
+                        <td> {{data.impression_cnt}} </td>
+                        <td> {{format_percent(data.impression_cnt,data.balance_cnt)}} </td>
+                        <td> {{format_float_num(data.ad_per_impr)}} </td>
+                        <td> {{data.ad_cnt}} </td>
+                        <td> {{format_float_num(data.cost_per_ad*10000)}} </td>
+                        <td> {{data.sum_consume}} </td>
+                    </tr>
+                    <tr>
+                        <td>同比</td>
+                        <td> {{format_rate(data.total_cnt,tongbi_data.total_cnt)}} </td>
+                        <td> {{format_rate(data.balance_cnt,tongbi_data.balance_cnt)}} </td>
+                        <td> {{format_rate(data.balance_rate,tongbi_data.balance_rate)}} </td>
+                        <td> {{format_rate(data.impression_cnt,tongbi_data.impression_cnt)}} </td>
+                        <td> {{format_rate(data.impr_rate,tongbi_data.impr_rate)}} </td>
+                        <td> {{format_rate(format_float_num(data.ad_per_impr),format_float_num(tongbi_data.ad_per_impr))}} </td>
+                        <td> {{format_rate(data.ad_cnt,tongbi_data.ad_cnt)}} </td>
+                        <td> {{format_rate(data.cost_per_ad*10000,tongbi_data.cost_per_ad*10000)}} </td>
+                        <td> {{format_rate(data.sum_consume,tongbi_data.sum_consume,)}} </td>
+                    </tr>
+                    <tr>
+                         <td>环比</td>
+                         <td> {{format_rate(data.total_cnt,huanbi_data.total_cnt)}} </td>
+                         <td> {{format_rate(data.balance_cnt,huanbi_data.balance_cnt)}} </td>
+                         <td> {{format_rate(data.balance_rate,huanbi_data.balance_rate)}} </td>
+                         <td> {{format_rate(data.impression_cnt,huanbi_data.impression_cnt)}} </td>
+                         <td> {{format_rate(data.impr_rate,huanbi_data.impr_rate)}} </td>
+                         <td> {{format_rate(format_float_num(data.ad_per_impr), format_float_num(huanbi_data.ad_per_impr))}} </td>
+                         <td> {{format_rate(data.ad_cnt,huanbi_data.ad_cnt)}} </td>
+                         <td> {{format_rate(data.cost_per_ad*10000,huanbi_data.cost_per_ad*10000)}} </td>
+                         <td> {{format_rate(data.sum_consume,huanbi_data.sum_consume,)}} </td>
+                    </tr>
+				</tbody>
+			</table>
+		</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">客户状态</div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                {% line_chart customer_data_list with style="width:200px; height:20px;" %}
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <p>流失定义: 最近3天没有消耗，但在过去第4天有消耗</p>
+        <p>重新推广客户定义：过去4天中，只有最近1天有推广</p>    
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <table class="table table-bordered table-hover" >
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th> 新增客戶账户 </th>
+                        <th> 新增推广客户 </th>
+                        <th> 流失推广客户 </th>
+                        <th> 重新推广客户 </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>总数</td>
+                        <td> {{cnt_data.new_cnt}} </td>
+                        <td> {{cnt_data.new_has_consume_cnt}} </td>
+                        <td> {{cnt_data.loss_cnt}} </td>
+                        <td> {{cnt_data.re_active_cnt}} </td>
+                    </tr>
+                    <tr>
+                        <td>直客</td>
+                        <td> {{direct_cnt_data.new_cnt}} </td>
+                        <td> {{direct_cnt_data.new_has_consume_cnt}} </td>
+                        <td> {{direct_cnt_data.loss_cnt}} </td>
+                        <td> {{direct_cnt_data.re_active_cnt}} </td>
+                    </tr>
+                    <tr>
+                        <td>子代理</td>
+                        <td> {{sub_agent_cnt_data.new_cnt}} </td>
+                        <td> {{sub_agent_cnt_data.new_has_consume_cnt}} </td>
+                        <td> {{sub_agent_cnt_data.loss_cnt}} </td>
+                        <td> {{sub_agent_cnt_data.re_active_cnt}} </td>
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">客户状态</div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                {% line_chart customer_data_cnt_list with style="width:200px; height:20px;" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+历史趋势-{{title}}
+{% endblock %}
+
+{% block page_content %}
+<h2>{{title}}</h2>
+<script src="{{ url_for('static', filename='Chart.bundle-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='chartkick.js') }}"></script>
+
+<div class="panel panel-default">
+    <div class="panel-heading">扣费成功率</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart succ_rate_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">扣费请求量</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart request_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">扣费金额</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart request_price_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">成功扣费量</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart succ_request_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">成功扣费金额</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart succ_fee_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

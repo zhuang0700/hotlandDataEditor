@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+
+{% if welcome %}
+<div class="panel panel-default">
+    <div class="panel-heading">Welcome</div>
+    <div class="panel-body">
+        <p>Welcome to Demand inSight Platform</p>
+        <p>Powered By EMI-Cube</p>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">{{title}}</div>
+    <div class="panel-body"> <p>扣费成功率：EMI BillingService收到的合法扣费请求中，成功完成扣费的请求占比.</p></div>
+    <!-- Table -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th> 媒体名称 </th>
+                            <th> 计费类型 </th>
+                            <th> 扣费请求量 </th>
+                            <th> 扣费请求金额(万) </th>
+                            <th> 成功扣费请求量 </th>
+                            <th> 成功扣费金额 </th>
+                            <th> 扣费成功率 </th>
+                            <th> 历史趋势 </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                        {%for data in data_list %}
+                        <tr>
+                            <td> {{data.media_type_name}} </td>
+                            <td> {{data.bid_type_name}} </td>
+                            <td> {{data.request_num}} </td>
+                            <td> {{format_big_num(format_si_to_yuan(data.request_price_sum))}} </td>
+                            <td> {{data.succ_request_num}} </td>
+                            <td> {{format_big_num(format_si_to_yuan(data.succ_fee_sum))}} </td>
+                            <td> {{format_percent(data.succ_request_num, data.request_num)}} </td>
+                            <td> <a href="/bs/history/{{data.media_type_id}}/{{data.bid_type_id}}" target="_blank">历史趋势</a> </td>
+                        </tr>
+                        {% endfor %}
+				</tbody>
+			</table>
+		</div>
+    </div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}

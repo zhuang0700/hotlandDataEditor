@@ -1,0 +1,524 @@
+{% extends "base.html" %}
+
+{% block title %}
+广告下发诊断
+{% endblock %}
+
+{% block page_content %}
+
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+<link  href="{{ url_for('static', filename='daterangepicker.css') }}" rel="stylesheet">
+<link  href="{{ url_for('static', filename='diagnose/diagTool.css') }}" rel="stylesheet">
+<div class="container">
+	<div class="bigShow">
+		<!-- 固定定位 -->
+		<ul class="small-flag">
+			<li><a href="#one">广告详情</a></li>
+			<li><a href="#two">诊断结果</a></li>
+			<li><a href="#three">离线诊断</a></li>
+			<li><a href="#four">历史数据</a></li>
+			<li><a href="#five">操作日志</a></li>
+		</ul>
+		<!-- 广告及输入框 -->
+		<div class="row-fluid fa-ad" data-spy="scroll" data-target=".navbar-example">
+			<div class="btn-group groups pos-relative">
+				<input type="hidden" id="adId">
+				<!-- <i class="search"></i> -->
+				<input type="text" class="ad-search" id="adButton" placeholder="请输入广告ID或者广告名称" autocomplete="off">
+				<i class="diag-del pos-abso"></i>
+			</div>
+
+			<button type="button" class="btn btn-info" id="btn-info" style="margin-left:30px">Go!</button>
+			<ul class="ad-select">
+			</ul>
+			<div class="pictures"></div>
+			<span class='ad-target-result'></span>
+		</div>
+		<!-- 广告详情 -->
+		<div class="panel panel-info detail mdy-pan">
+			<div class="panel-header triggle-show-hidden" id="one">广告详情</div>
+			<span class="glyphicon glyphicon-menu-down my-icon" aria-hidden="true"></span>
+			<div class="panel-body">
+				<div class="container-fluid">
+					<div class="table-responsive">
+						<table class="table table-bordered ad-detail" id="table-bordered">
+							<tr>
+								<th>Adld</th>
+								<th>广告名称</th>
+								<th>创建时间</th>
+								<th>应用名称</th>
+								<th>广告类型</th>
+								<th>计费类型</th>
+								<th>广告出价</th>
+								<th>广告组ID</th>
+                                <th>计划ID</th>
+								<th>广告组定向</th>
+								<th>计划日预算</th>
+								<th>账户日预算</th>
+								<th>广告状态</th>
+								<th>广告组状态</th>
+								<th>计划状态</th>
+								<th>Ad层当天消耗</th>
+								<th>计划层当天消耗</th>
+								<th>Customer_ID</th>
+								<th>账户名称</th>
+								<th>素材</th>
+							</tr>
+							<tr class="canDel">
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+                                <td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 诊断结果 -->
+		<div class="panel panel-info detail mdy-pan">
+			<div class="panel-header triggle-show-hidden" id ="two">诊断结果<br>
+			<span style="font-size: 12px;">广告从创建到在媒体上曝光需要经过广告库和广告引擎两个步骤，所以该模块是通过模拟流量请求来触发广告，得到该广告在广告库和广告引擎的状态；只有当这两步都有效时,才表示该广告本次触发可以被正<br>常下发给媒体。</span></div>
+			<span class="glyphicon glyphicon-menu-down my-icon" aria-hidden="true"></span>
+			<div class="panel-body">
+				<div class="container-fluid">
+					<div class="diag-left">
+						<span class='result-big'>step1 外围诊断<i class="i-e-help"><span class='result-txt'>外围诊断是诊断所查询的广告当前在广告库的状态，即下发给搜索引擎前的状态</span></i></span>
+						<span class='result-big'>step2 在线诊断<i class="i-e-help"><span class='result-txt'>在线诊断是给出查询的广告当前在搜索引擎里的下发情况，该功能目前尚不可用</span></i></span>
+					</div>					
+					<div class="table-responsive diag-right">
+						<table class="mdf-tab table">
+							<tr>
+								<td class="tr-wid">诊断结果</td>
+								<td id='outer_result' class="text">——</td>
+
+							</tr>
+							<tr>
+								<td class="tr-wid">诊断结果</td>
+								<td class="text">——</td>
+							</tr>
+						</table>
+					</div>
+					<div class="tar result-all"><a href="javascript:void(0)">点击查看更多在线诊断结果</a>
+						<span class="result-ext">该功能暂不可用，敬请期待</span></div>
+					</div>
+				</div>
+			</div>
+			<!--离线诊断  -->
+
+			<div class="panel panel-info detail mdy-pan offline">
+				<div class="panel-header triggle-show-hidden" id ="three">离线诊断</div>
+				<span class="glyphicon glyphicon-menu-down my-icon" aria-hidden="true"></span>
+				<div class="panel-body" style="background-color: #fafbfb">
+					<div class="container-fluid">
+						<div class="offline-btns">
+							<!-- 维度与指标 -->
+							<div class="btn-group">
+								<div class="dropdown off-pen">
+									<button class="dropdown-toggle dimAindi" type="button" id="dropdownMenu2" style="width: 105px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										维度与指标
+									</button>
+									<div class="dropdown-menu dimen" aria-labelledby="dropdownMenu1">
+										<div class="dimen-left">
+											<div  data-stopPropagation='true' class="show-color">维度</div>
+											<div  data-stopPropagation='true'>指标</div>
+											<div  data-stopPropagation='true'> </div>
+										</div>
+										<div class="dimen-right">
+											<ul class="clearfix dimen-only">
+												<li class="off-li"><input type="checkbox" id="off-checkbox-date" checked="checked"><span>日期</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-hour"><span>小时</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-media"><span>媒体名称</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-tag"><span>广告位tagId</span></li>
+											</ul>
+											<ul class="init-hide clearfix">
+												<li class="off-li"><input type="checkbox" id="off-checkbox-retrieve" checked="checked"><span>触发次数</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-rank" checked="checked"><span>进入rank队列次数</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-result" checked="checked"><span>下发次数</span></li>
+												<li class="off-li"><input type="checkbox" id="off-checkbox-direction" checked="checked"><span>定向过滤</span></li>
+												<li class="off-li">
+													<span data-stopPropagation1='true' class="glyphicon glyphicon-menu-right index-icon off-span" aria-hidden="true"></span>
+													<input type="checkbox" id="off-checkbox-biz" checked="checked">
+													<span>业务过滤</span>
+													<ul class="init-hide pos-relative dimen-child" name="off-biz-filter">
+													</ul>
+												</li>
+												<li class="off-li ">
+													<span data-stopPropagation1='true' class="glyphicon glyphicon-menu-right index-icon off-span" aria-hidden="true"></span>
+													<input type="checkbox" id="off-checkbox-common"  checked="checked"><span>通用规则过滤</span>
+													<ul class="init-hide pos-relative dimen-child">
+													</ul>
+												</li>
+												<li class="off-li ">
+													<span data-stopPropagation1='true' class="glyphicon glyphicon-menu-right index-icon off-span" aria-hidden="true"></span>
+													<input type="checkbox" id="off-checkbox-other" checked="checked"><span>其他</span>
+													<ul class="init-hide pos-relative dimen-child">
+													</ul>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 媒体名称 <-->
+							<span class="common-text media-span">媒体名称：</span>
+							<div class="btn-group">
+								<!-- <button type="button" class="btn btn-default dropdown-toggle media" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									全部
+								</button> -->
+								<input type="text" class="form-control media off-media-search" placeholder="全部">						
+								<span class="icon-search offline-spanm"></span>
+								<span class='result-media'></span>
+								<ul class="dropdown-menu media-context" id="offline-media">
+									<li><a href='javascript:void(0)'>全部</a></li>
+								</ul>
+							</div>
+							<!-- TagId -->
+							<span class="common-text TagId-span">广告位TagId：</span>
+							<div class="btn-group">
+								<!-- <button type="button" class="btn btn-default dropdown-toggle tag-id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									全部
+								</button> -->
+								<input type="text" class="form-control media off-tagId-search tag-id" placeholder="全部">						
+								<span class="icon-search offline-spant" aria-hidden="true"></span>
+								<span class='result-tagId'></span>
+								<ul class="dropdown-menu tag-content" id="offline-TagId">
+
+								</ul>
+							</div>
+							<!-- 日期 -->
+							<span class="common-text date-span">日期：</span>
+							<div class="btn-group">							
+								<input type="text" name="daterange" id="off-date" class="datepicker" />
+							</div>
+							<button type="submit" class="btn btn-info offline-go" id="offline-select">查询</button>
+							<button type="submit" class="btn btn-info down-load">下载</button>
+						</div>
+						<div class="table-fa">
+							<div class="table-header">
+								<table class="tableshow">
+									<thead   id="thead-offline">
+										<tr>
+											<th>
+												<div class="col-date">
+													Day<span class="updown" click='1'></span>
+												</div>
+											</th>
+											<th><div class="col-retrieve">触发次数<i class="i-e-help"><span class="table-tip">即创意被请求出来的次数,是创意在检索端走的第一步。一般来讲 触发次数=下发次数+各种被过滤的次数。</span></i><span class="updown" click="1" logo="retrieve_count"></span></div></th>
+											<th><div class="col-result">下发次数<i class="i-e-help"><span class="table-tip">即创意被成功下发给客户端的次数，下发次数与曝光次数挂钩。</span></i><span class="updown" click="1" logo="result_count"></div></span>
+											</th>
+											<th><div class="col-rank">进入rank队列次数<i class="i-e-help"><span class="table-tip">即创意有预估eCPM，参与排序的次数，能进入rank队列，表示创意距离被成功下发不远了。</span></i><span class="updown" click="1" logo="rank_count"></span></div></th>
+
+											<th>
+												<div class="col-direction">
+													定向过滤<span class="updown" click='1'></span>
+												</div>
+											</th>
+											<th>
+												<div class="col-biz">
+													业务过滤<span class="updown" click='1'></span>
+												</div>
+											</th>
+											<th>
+												<div class="col-common">
+													通用规则过滤<span class="updown" click='1'></span>
+												</div>
+											</th>
+											<th>
+												<div class="col-other">
+													其他<span class="updown" click='1'></span>
+												</div>
+											</th>
+
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div class="table-body">
+								<table class="tableshow table-second">
+									<tbody id="tbody-offline" class="tbody-offline">
+										<tr>
+											<td><div class="col-date">-</div></td>
+											<td><div class="col-retrieve">-</div></td>
+											<td><div class="col-result">-</div></td>
+											<td><div class="col-rank">-</div></td>
+											<td><div class="col-direction">-</div></td>
+											<td><div class="col-biz">-</div></td>
+											<td><div class="col-common">-</div></td>
+											<td><div class="col-other">-</div></td>
+
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+						<nav class="mynavi">
+							<!-- 翻页 -->
+							<ul class="pagination mypage" id="off-page">
+						<!-- <span class="combineiconleft offcombineiconleft"></span>
+						<span class="offpage page">第1页</span>
+						<span class="combineiconright offcombineiconright"></span>
+						<span class="offtotal total">共1页</span> -->
+						<li>
+							<div class="dropdown offpage-drop">
+								<button class="btn dropdown-toggle " type="button">
+									<span class="dropdown-title">1</span>
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="javascript:;">1</a></li>
+									<li><a href="javascript:;">2</a></li>
+									<li><a href="javascript:;">3</a></li>
+									<li><a href="javascript:;">4</a></li>
+									<li><a href="javascript:;">5</a></li>
+								</ul>
+							</div>
+						</li>
+						<!-- <li class="offpageTxt"><a href="javascript:;">首页</a></li> -->
+						<li class="offpageTxt"><a href="javascript:;" class="icon_left"><i></i></a></li>
+						<li class="offpage"><a href="javascript:;">1</a></li>
+						<li class="offpageTxt"><a href="javascript:;" class="icon_right"><i></i></a></li>
+						<!-- <li class="offpageTxt"><a href="javascript:;">末页</a></li> -->
+					</ul>
+					<!-- 自选条数 -->
+					<div class="btn-group my-num">
+						<!-- <button type="button" class="btn btn-info downpage offdownpage" style="background-color:#3f91ec;border:none">10</button>
+						<button type="button" class="btn btn-info dropdown-toggle"  style="background-color:#3f91ec;border:none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="javascript:;">10</a></li>
+							<li><a href="javascript:;">30</a></li>
+							<li><a href="javascript:;">50</a></li>
+							<li><a href="javascript:;">100</a></li>
+						</ul> -->
+						<button class="buttonnum"><span class="numtxt">10</span><span>条/页</span><i class="num"></i></button>
+						<ul class="downnum">
+							<li><a href="javascript:;">10</a></li>
+							<li><a href="javascript:;">30</a></li>
+							<li><a href="javascript:;">50</a></li>
+							<li><a href="javascript:;">80</a></li>
+						</ul>
+					</div>
+				</nav>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 历史数据 -->
+	<div class="panel panel-info detail mdy-pan history-data">
+		<div class="panel-header triggle-show-hidden" id ="four">历史数据</div>
+		<span class="glyphicon glyphicon-menu-down my-icon" aria-hidden="true"></span>
+		<div class="panel-body">
+			<div class="container-fluid">
+				<span class="common-text" style="margin-left: 0">分组：</span>
+				<div class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle media group-by" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						全部
+					</button>
+					<ul class="dropdown-menu" id="his-group">
+						<li data-id="all" ><a href="javascript:;">全部</a></li>
+						<li data-id="media"><a href="javascript:;">媒体名称</a></li>
+						<li data-id="tag"><a href="javascript:;">广告位名称</a></li>
+					</ul>			
+					<span class="icon-opt"></span>
+				</div>
+
+				<span class="common-text media-span media-selected" >媒体名称：</span>
+				<div class="btn-group">
+							<!-- <button type="button" class="btn btn-default dropdown-toggle media" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								全部
+							</button> -->
+							<input type="text" class="form-control media his-media-search" placeholder="全部">							
+							<span class="icon-search his-spanm" aria-hidden="true"></span>
+							<span class='result-media'><i class="i-e-help"><span class='result-txt'>外围诊断是诊断所查询的广告当前在广告库的状态，即下发给搜索引擎前的状态</span></i></span>
+							<ul class="dropdown-menu media-context" id="his-media">
+							</ul>
+						</div>
+
+						<span class="common-text TagId-span tag-selected">广告位TagId：</span>
+						<div class="btn-group">
+							<!-- <button type="button" class="btn btn-default dropdown-toggle tag-id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								全部
+							</button> -->
+
+							<input type="text" class="form-control media his-tagId-search tag-id" placeholder="全部">						
+							<span class="icon-search his-spant" aria-hidden="true"></span>
+							<span class='result-tagId'></span>
+							<ul class="dropdown-menu tag-content" id="his-TagId">
+							</ul>
+						</div>
+
+						<div class="btn-group">
+							<button type="submit" class="btn btn-info btn-margin" id="history">查询</button>
+						</div>
+						<!-- 图表 -->
+						<div class="echarts" id="main">
+						</div>
+
+
+
+					</div>
+
+				</div>
+			</div>
+
+			<!-- 操作日志 -->
+			<div class="panel panel-info detail mdy-pan history-data">
+				<div class="panel-header triggle-show-hidden" id="five">操作日志</div>
+				<span class="glyphicon glyphicon-menu-down my-icon" aria-hidden="true"></span>
+				<div class="panel-body">
+					<div class="container-fluid">
+						<div class="offline-btns">
+
+							<span class="common-text" style="margin-left: 0">操作对象</span>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle media" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									全部
+								</button>
+								<ul class="dropdown-menu" id="oprt-opt">
+									<li data-id="all"><a href="javascript:;">全部</a></li>
+									<li data-id="campaign"><a href="javascript:;">计划</a></li>
+									<li data-id="group"><a href="javascript:;">广告组</a></li>
+									<li data-id="creative"><a href="javascript:;">创意</a></li>
+									<li data-id="account"><a href="javascript:;">账户</a></li>
+								</ul>
+								<span class="icon-opt"></span>
+							</div>
+
+							<span class="common-text media-span">操作行为</span>
+							<div class="btn-group">
+								<button type="button" class="btn btn-default dropdown-toggle media" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									全部
+								</button>
+								<ul class="dropdown-menu" id="oprt-bhr">
+									<li data-id="0" ><a href="javascript:;">全部</a></li>
+									<li data-id="3"><a href="javascript:;">修改计划</a></li>
+									<li data-id="6"><a href="javascript:;">修改广告组</a></li>
+									<li data-id="9"><a href="javascript:;">修改创意</a></li>
+									<li data-id="8"><a href="javascript:;">删除创意</a></li>
+									<li data-id="10"><a href="javascript:;">修改账户预算</a></li>
+								</ul>
+								<span class="icon-opt"></span>
+							</div>
+
+							<span class="common-text media-span">操作日期</span>
+							<div class="btn-group">
+								<input type="text" name="daterange" id="opt-date" class="datepicker" />
+							</div>
+
+							<div class="btn-group">
+								<button type="submit" class="btn btn-info btn-margin" id="operate">查询</button>
+							</div>
+						</div>
+						<div class="ad-detail">
+							<table class="table table-bordered tab-style">
+								<thead>
+									<tr>
+										<th>操作时间</th>
+										<th>操作对象</th>
+										<th>操作类型</th>
+										<th>操作前</th>
+										<th>操作后</th>
+									</tr>
+								</thead>
+								<tbody class="opt_value">
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- 翻页 -->
+					<nav class="mynavi1">
+
+						<ul class="pagination mypage" id='opt-page'>
+							<!-- <span class="combineiconleft optcombineiconleft"></span>
+							<span class="optpage page">第1页</span>
+							<span class="combineiconright optcombineiconright"></span>
+							<span class="opttotal total">共1页</span>-->
+							<li>
+								<div class="dropdown optpage-drop">
+									<button class="btn dropdown-toggle " type="button">
+										<span class="dropdown-title">1</span>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="javascript:;">1</a></li>
+										<li><a href="javascript:;">2</a></li>
+										<li><a href="javascript:;">3</a></li>
+										<li><a href="javascript:;">4</a></li>
+										<li><a href="javascript:;">5</a></li>
+									</ul>
+								</div>
+							</li>
+							<li class="optpageTxt"><a href="javascript:;">首页</a></li>
+							<li class="offpageTxt"><a href="javascript:;" class="icon_left"><i></i></a></li>
+							<li class="optpage"><a href="javascript:;">1</a></li>
+							<li class="offpageTxt"><a href="javascript:;" class="icon_right"><i></i></a></li>
+							<li class="optpageTxt"><a href="javascript:;">末页</a></li>
+						</ul>
+
+						<div class="btn-group dropup my-num1">
+							<!-- <button type="button" class="btn btn-info downpage optdownpage" style="background-color:#3f91ec;border:none">10</button>
+							<button type="button" class="btn btn-info dropdown-toggle" style="background-color:#3f91ec;border:none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="caret"></span>
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a href="javascript:;">10</a></li>
+								<li><a href="javascript:;">30</a></li>
+								<li><a href="javascript:;">50</a></li>
+								<li><a href="javascript:;">100</a></li>
+							</ul> -->
+							<button class="buttonnum"><span class="numtxt">10</span><span>条/页</span><i class="num"></i></button>
+							<ul class="downnum1">
+								<li><a href="javascript:;">10</a></li>
+								<li><a href="javascript:;">30</a></li>
+								<li><a href="javascript:;">50</a></li>
+								<li><a href="javascript:;">80</a></li>
+							</ul>
+						</div>
+
+					</nav>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}
+
+	{% block scripts %}
+	<script src="{{ url_for('static', filename = 'jquery-2.2.4.min.js') }}"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="{{ url_for('static', filename = 'moment.min.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'daterangepicker.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'echarts.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='date-format.js') }}"></script>
+	<script src="{{ url_for('static', filename='diagnose/common.js') }}"></script>
+	<script src="{{ url_for('static', filename = 'diagnose/diagTool.js') }}"></script>
+
+	{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}
+历史趋势-{{title}}
+{% endblock %}
+
+{% block page_content %}
+<h2>{{title}}</h2>
+<script src="{{ url_for('static', filename='Chart.bundle-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='chartkick.js') }}"></script>
+
+{% if customer_data %}
+<div class="panel panel-default">
+    <div class="panel-heading">客户状态</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart customer_data with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">收入</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart consume_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">CPC</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart cpc_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">CPD</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart cpd_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">ECPM</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart ecpm_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">曝光量</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart impression_list with style="width:200px; height:20px;" %}
+
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">点击量</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart click_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div><div class="panel panel-default">
+    <div class="panel-heading">开始下载</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart download_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">CTR</div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% line_chart ctr_list with style="width:200px; height:20px;" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

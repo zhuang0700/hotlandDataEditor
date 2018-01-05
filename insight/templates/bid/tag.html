@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% macro header(src) %}
+    {% if src == "toutiao" %}
+        <td>广告主</td>
+        <td>Title</td>
+        <td style="width:278px">LandingPage</td>
+        <td style="width:483px">素材</td>
+        <td>pv</td>
+        <td>亿米客户</td>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_data(src, row) %}
+    {% if src == "toutiao" %}
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td><a href="{{ row[2] }}" target="_blank">
+            {% if row[2]|length <= 40 %}
+                {{ row[2] }}
+            {% else %}
+                {{ row[2][:35] }}...
+            {% endif %}
+        </a></td>
+        <td>
+            {% for asset in row[3] %}
+                <a href="{{ asset['url'] }}" target="_blank"><img src="{{ asset['url'] }}" width="150"></a>&nbsp;
+            {% endfor %}
+        </td>
+        <td>{{ row[4] }}</td>
+        <td>
+            {% for c in row[5] %}
+                <a href="/customer/history/{{ c }}">{{ c }}</a><br/>
+            {% endfor %}
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% block page_content %}
+    {% if welcome %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Welcome</div>
+            <div class="panel-body">
+                <p>Welcome to Demand inSight Platform</p>
+                <p>Powered By EMI-Cube</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <h4>Tag Id: <span id="tagIdTxt">{{ tag_id }}</span></h4>
+                <input type="text" class="form-control" style="width:170px;display:inline" placeholder="Another Ad" id="tagIdInput"/>
+                <span class="input-group-btn" style="display:inline">
+                    <button class="btn btn-info" type="button" id="tagIdBtn">Go!</button>
+                </span>
+		&nbsp;&nbsp;
+                <span class="input-group-btn" style="display:inline">
+                    <button class="btn btn-info" type="button" id="dataRefreshBtn">更新Cache数据</button>
+                </span>
+                <br/>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">tagid对应的ecpm分布图</div>
+                <div class="container-fluid">
+                    <div class="row-fluid">
+                        <div id="main-chart3" style="width:100%;height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='echarts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme/macarons.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme/shine.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme/vintage.js') }}"></script>
+    <script src="{{ url_for('static', filename='theme/roma.js') }}"></script>
+    <script type="text/javascript">
+        function tagInfo(chart,data1,data2){
+          var xAxis = [];
+          var yAxisCnt = [];
+          for (var i in data1) {
+              xAxis.push(data1[i]);
+            }
+          for(var i in data2){
+            yAxisCnt.push(data2[i]);
+          }
+          var option = {
+              title:{
+                  text:"x坐标：单位元，1表示出价在1-2元区间内,y坐标表示ecpm出现次数"
+              },
+              tooltip:{
+                 trigger:"axis"
+              },
+              legend:{
+                 data:['ecpm']
+              },
+              toolbox:{
+              },
+              xAxis:{data:xAxis},
+              yAxis:{},
+              series:[
+              {
+                 name:'Count',
+                 type:'bar',
+                 data:yAxisCnt
+              }
+              ]
+            };
+        chart.setOption(option);
+        }
+        function ttitle(tagId){
+            $("tagIdTxt").text(tagId)
+        }
+        function tagRefresh() {
+            var tagId = $("#tagIdInput").val();
+            ttitle(tagId);
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/bid-landscapetag-data?tagid=" + tagId ,
+                success: function (msg) {
+                    if (!msg.success) {
+                        return false;
+                    }
+                    tagInfo(myChart3, msg.data1,msg.data2);
+                },
+                error: function () {
+                    alert("查询失败")
+                }
+            })
+        }
+
+        function dataRefresh() {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/bid-landscape-refresh",
+                success: function (msg) {
+                    alert("更新完毕")
+                }
+            })
+        }
+        var myChart3 =echarts.init(document.getElementById('main-chart3'),'shine');
+        $("#tagIdBtn").click(tagRefresh);
+        $("#dataRefreshBtn").click(dataRefresh);
+    </script>
+{% endblock %}

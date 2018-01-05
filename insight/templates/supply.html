@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+
+{% if welcome %}
+<div class="panel panel-default">
+    <div class="panel-heading">Welcome</div>
+    <div class="panel-body">
+        <p>Welcome to Demand inSight Platform</p>
+        <p>Powered By EMI-Cube</p>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">{{title}}</div>
+    <div class="panel-body"> <p></p></div>
+    <div class="panel-body"> &nbsp;&nbsp;总请求量: 每日该广告位的请求数</div>
+    <div class="panel-body"> &nbsp;&nbsp;总请求广告量: 每次广告请求中，请求广告数量的之和</div>
+    <div class="panel-body"> &nbsp;&nbsp;AdCntPerRequest: = 总请求广告量 / 总请求量</div>
+    <div class="panel-body"> &nbsp;&nbsp;有返回结果的请求量: 返回广告数大于0的请求数</div>
+    <div class="panel-body"> &nbsp;&nbsp;填充率: = 有返回结果的请求量 / 总请求量</div>
+    <!-- Table -->
+
+    <!-- Table -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th> 广告位名称 </th>
+                            <th> 总请求量 </th>
+                            <th> 总请求广告量 </th>
+                            <th> AdCntPerRequest </th>
+                            <th> 有返回结果的请求量 </th>
+                            <th> 填充率 </th>
+                            <th> 历史详情 </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                        {%for data in data_list %}
+                        <tr>
+                            <td> {{data.tag_name}} </td>
+                            <td> {{data.request_cnt}} </td>
+                            <td> {{data.total_request_ads_cnt}} </td>
+                            <td> {{format_float(data.total_request_ads_cnt, data.request_cnt)}} </td>
+                            <td> {{data.has_result_request_cnt}} </td>
+                            <td> {{format_percent(data.has_result_request_cnt, data.request_cnt)}} </td>
+                            <td> <a href="/supply/fill/history/{{data.tag_id}}">历史趋势</a> </td>
+                        </tr>
+                        {% endfor %}
+				</tbody>
+			</table>
+		</div>
+    </div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}

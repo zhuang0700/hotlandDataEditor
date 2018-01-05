@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    {% if welcome %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Welcome</div>
+            <div class="panel-body">
+                <p>Welcome to Demand inSight Platform</p>
+                <p>Powered By EMI-Cube</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">{{"行业:" + industry + "," if industry else ""}}{{adtype if adtype else "各广告类型"}}过去两月(8个完整工作周(Fri~Thu))投放时间的数量</div>
+            <div class="panel-body"> <p>行([广告类型])和列([N]周)定位的单元格上的数字[i]表示:<br/>过去两个月, 在这个[广告类型]上, 共有[i]个客户在不同的[N]个工作周里有过投放消耗</p></div>
+            <!-- Table -->
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <th> 广告类型 </th>
+                                {% for i in range(1, 9) %}
+                                    <th> {{i}}周 </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in adtypes %}
+                                <tr>
+                                    {% if t != "其他" %}
+                                        <td><a href="/customer/active/weeks?adtype={{t}}">{{t}}</a></td>
+                                        {% for i in range(1, 9) %}
+                                            <td><a href="/customer/active/detail?week={{i}}&adtype={{t}}{{'&industry=' + industry if industry else ''}}">{{0 if i not in adtypes[t] else adtypes[t][i]|length}}</a></td>
+                                        {% endfor %}
+                                    {% else %}
+                                        <td> {{t}} </td>
+                                        {% for i in range(1, 9) %}
+                                            <td> {{0 if i not in adtypes[t] else adtypes[t][i]|length}} </td>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel-heading">{{"广告类型:" + adtype + "," if adtype else ""}}{{industry if industry else "各行业"}}过去两月(8个完整工作周(Fri~Thu))投放时间的数量</div>
+            <div class="panel-body"> <p>行([行业])和列([N]周)定位的单元格上的数字{i}表示:<br/>过去两个月, 在这个[行业]上, 共有[i]个客户在不同的[N]个工作周里有过投放消耗</p></div>
+            <!-- Table -->
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <th> 客户行业 </th>
+                                {% for i in range(1, 9) %}
+                                    <th> {{i}}周 </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for t in industries %}
+                                <tr>
+                                    {% if t != "其他" %}
+                                        <td><a href="/customer/active/weeks?industry={{t}}">{{t}}</a></td>
+                                        {% for i in range(1, 9) %}
+                                            <td><a href="/customer/active/detail?week={{i}}&industry={{t}}{{'&adtype=' + adtype if adtype else ''}}">{{0 if i not in industries[t] else industries[t][i]|length}}</a></td>
+                                        {% endfor %}
+                                    {% else %}
+                                        <td> {{t}} </td>
+                                        {% for i in range(1, 9) %}
+                                            <td> {{0 if i not in industries[t] else industries[t][i]|length}} </td>
+                                        {% endfor %}
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

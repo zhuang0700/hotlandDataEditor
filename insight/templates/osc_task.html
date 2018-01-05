@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <style type="text/css">
+        .my_table th, tr, td {
+            padding: 0;
+        }
+    </style>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">任务管理</div>
+        <div class="panel-body"><p></p></div>
+        <!-- Table -->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th> 任务名称 </th>
+                        <th> 任务状态 </th>
+                        <th> cron表达式 </th>
+                        <th> 负责人 </th>
+                        <th> 今日执行情况 </th>
+                        <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in data_list %}
+                        <tr>
+                            {% if data.status == 1 %}
+                            <td> {{ data.task_name }} </td>
+                            <td> 执行中 </td>
+                            {% else %}
+                            <td>
+                                <span style="color: gray;">
+                                    {{ data.task_name }}
+                                </span>
+                            </td>
+                            <td>
+                                <span style="color: gray;">
+                                    已停用
+                                </span>
+                            </td>
+                            {% endif %}
+                            <td> {{ data.cron }} </td>
+                            <td> {{ data.supervisor }} </td>
+                            <td>
+                                <span style="color:{{ data.indicator }}">
+                                    {{ data.execution }}
+                                </span>
+                            </td>
+                            <td><a href="/osc-task/execute/{{ data.id }}">执行详情</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

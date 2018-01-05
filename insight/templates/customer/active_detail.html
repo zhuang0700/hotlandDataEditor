@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    {% if welcome %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Welcome</div>
+            <div class="panel-body">
+                <p>Welcome to Demand inSight Platform</p>
+                <p>Powered By EMI-Cube</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"></div>
+            <div class="panel-body"><p>{{ adtype + "," if adtype else "" }}过去8周中有{{ week }}周有过投放的客户</p></div>
+            <!-- Table -->
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <td>核代</td>
+                                <td>二代</td>
+                                <td>客户</td>
+                                <td>行业</td>
+                                <td>过去8周消耗</td>
+                                <td>历史趋势</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in customers %}
+                                <tr>
+                                    <td>{{row[5]}}</td>
+                                    <td>{{row[4]}}</td>
+                                    <td>{{row[3]}}</td>
+                                    <td>{{row[2]}}</td>
+                                    <td>{{"%.2f"|format(row[1])}}</td>
+                                    <td><a href="/customer/history/{{row[0]}}" target="_blank">历史趋势</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

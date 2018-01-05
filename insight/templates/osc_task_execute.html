@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+    <style type="text/css">
+        .my_table th, tr, td {
+            padding: 0;
+        }
+    </style>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">定时任务</div>
+        <div class="panel-body"><p></p></div>
+        <!-- Table -->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th> 调度时间</th>
+                        <th> 执行时间</th>
+                        <th> 结束时间</th>
+                        <th> 执行状态</th>
+                        <th> 执行结果</th>
+                        <th> 失败信息</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in data_list %}
+                        <tr>
+                            <td> {{ data.schedule_time }} </td>
+                            <td> {{ data.start_time }} </td>
+                            <td> {{ data.end_time }} </td>
+                            <td>
+                                <span style="color:{{ result_color_map[data.result_code] }}">
+                                    {{ result_map[data.result_code] }}
+                                </span>
+                            </td>
+                            <td> {{ data.result }} </td>
+                            <td> {{ data.fail_msg }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

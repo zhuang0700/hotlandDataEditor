@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+广告主数据关键指标监控-{{title}}
+{% endblock %}
+
+{% block page_content %}
+<h2>{{title}}</h2>
+<script src="{{ url_for('static', filename='Chart.bundle-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='chartkick.js') }}"></script>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">广告主数据关键指标监控-{{date}}</div>
+    <div class="panel-body"> <p></p></div>
+    <div class="panel-body"> &nbsp;&nbsp;CTR异常: 曝光数大于100 且 点击率大于50%</div>
+    <div class="panel-body"> &nbsp;&nbsp;CVR异常: 点击数大于100 且 点击率大于50%</div>
+    <div class="panel-body"> &nbsp;&nbsp;有点击下载但未扣费: 点击或下载大于100，但扣费为0</div>
+    <div class="panel-body"> &nbsp;&nbsp;有点击下载但无曝光: 点击或下载大于100，但曝光为0</div>
+    <div class="panel-body"> &nbsp;&nbsp;有曝光无点击无下载: 曝光数大于1000，但点击和下载都为0</div>
+    <!-- Table -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th> 媒体ID </th>
+                            <th> 投放的广告数 </th>
+                            <th> 有异常的广告数 </th>
+                            <th> CTR异常广告数 </th>
+                            <th> CVR异常广告数 </th>
+                            <th> 有点击下载但未扣费 </th>
+                            <th> 有点击下载但无曝光 </th>
+                            <th> 有曝光无点击无下载 </th>
+                            <th> 详情 </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                        {%for data in data_list %}
+                        <tr>
+                            <td> {{data.supply_id}}-{{data.supply_name}} </td>
+                            <td> {{data.total_ads_cnt}} </td>
+                            <td> {{data.alert_ads_cnt}} </td>
+                            <td> {{data.alert_ctr_cnt}} </td>
+                            <td> {{data.alert_cvr_cnt}} </td>
+                            <td> {{data.alert_no_cost_cnt}} </td>
+                            <td> {{data.alert_no_view_cnt}} </td>
+                            <td> {{data.alert_just_view_cnt}} </td>
+                            <td> <a href="/dq/supply/{{data.supply_id}}">查看详情</a> </td>
+                        </tr>
+                        {% endfor %}
+				</tbody>
+			</table>
+		</div>
+    </div>
+</div>
+
+{% endblock %}

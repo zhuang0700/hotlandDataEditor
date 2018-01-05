@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="static/css/index.css"/>
+</head>
+<body>
+<div class="header">
+    <center><h2>Demand inSight Platform</h2></center>
+</div>
+<div class="container">
+    <!-- <div class="item">
+         <form action="/login" method="post">
+             用户名：<input type="text"  name="username" /><br/>
+             密&nbsp;&nbsp;码：<input type="password" name="password" /><br/>
+             <input type="submit" value="登录"/>
+         </form>
+     </div>-->
+    <center>
+        <span style="color:red">{{message}}</span>
+        <form action="/login" method="post">
+            <table id="tablestyle">
+                <tr style="height: 20px;">
+                    <td colspan="2" style="color:red" id="message"></td>
+                </tr>
+                <tr style="height: 38px;">
+                    <td class="td1">账号：</td>
+                    <td class="td2"><input autocomplete="off" value="{{username}}" name="username"
+                                           style="text-indent:20px;font-size: 20px;color: blue" type="text" id="name"/>
+                    </td>
+                </tr>
+                <tr style="height: 38px;">
+                    <td class="td1">密码：</td>
+                        <td class="td2"><input autocomplete="off" value="{{password}}" style="text-indent:20px;font-size: 20px;" type="password"
+                                           name="password" id="password"/></td>
+                </tr>
+                <tr style="height: 68px;">
+                    <td colspan="2"  class="td3"><input type="submit" value="登录" style="margin-left: 30%; width: 60%;height: 80%" /></td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</div>
+</body>
+</html>
