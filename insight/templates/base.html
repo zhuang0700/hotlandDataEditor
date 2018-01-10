@@ -9,7 +9,7 @@
 <link rel="icon" href="{{ url_for('static',filename = 'favicon.ico')  }}" type="image/x-icon"/>
 {% endblock %}
 
-{% block title %}Hotland Data Editor{% endblock %}
+{% block title %}Data Editor{% endblock %}
 
 {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
@@ -24,34 +24,38 @@
             <a class="navbar-brand" href="/">Demand Insight</a>
         </div>
         <div class="navbar-collapse collapse">
-            {% if visitable("demand") %}
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <!--<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">客户分析-->
-                            <!--<span class="caret"></span>-->
-                        <!--</button>-->
-                        <a id="demand-status" data-target="#" href="/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            客户分析
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation">
-                                <a role="menuitem" tabindex="-1" href="/demand/spent">在投客户</a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" tabindex="-1" href="/demand/acquisition">新增客户</a>
-                            </li>
-                            <!--<li role="presentation" class="divider"></li>-->
-                            <li role="presentation">
-                                <a role="menuitem" tabindex="-1" href="/demand/churn">流失客户</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            {% endif %}
+{#            {% if visitable("demand") %}#}
+{#                <ul class="nav navbar-nav">#}
+{#                    <li class="dropdown">#}
+{#                        <!--<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">客户分析-->#}
+{#                            <!--<span class="caret"></span>-->#}
+{#                        <!--</button>-->#}
+{#                        <a id="demand-status" data-target="#" href="/" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#}
+{#                            客户分析#}
+{#                            <span class="caret"></span>#}
+{#                        </a>#}
+{#                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">#}
+{#                            <li role="presentation">#}
+{#                                <a role="menuitem" tabindex="-1" href="/demand/spent">在投客户</a>#}
+{#                            </li>#}
+{#                            <li role="presentation">#}
+{#                                <a role="menuitem" tabindex="-1" href="/demand/acquisition">新增客户</a>#}
+{#                            </li>#}
+{#                            <!--<li role="presentation" class="divider"></li>-->#}
+{#                            <li role="presentation">#}
+{#                                <a role="menuitem" tabindex="-1" href="/demand/churn">流失客户</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            {% endif %}#}
             <ul class="nav navbar-nav" style="float: right">
-                <li><a href="/logout">退出</a></li>
+                <li><a href="/railway/list">db测试</a></li>
             </ul>
+
+            <div class="nav navbar-nav" style="float: right">
+                <a href="/logout">退出</a>
+            </div>
 
         </div>
         <!--

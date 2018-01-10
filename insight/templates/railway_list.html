@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+
+{% if welcome %}
+<div class="panel panel-default">
+    <div class="panel-heading">Welcome</div>
+    <div class="panel-body">
+        <p>Welcome to Demand inSight Platform</p>
+        <p>Powered By EMI-Cube</p>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">{{title}}</div>
+    <div class="panel-body"> <p>线路数据总览</p></div>
+    <!-- Table -->
+    <div class="container-fluid">
+        <div class="row-fluid">
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th> 城市 </th>
+                            <th> 线路 </th>
+                            <th> 里程 </th>
+                            <th> 车型及编组 </th>
+                            <th> 最高运行速度 </th>
+                            <th> 开通时间 </th>
+                            <th> 工程投资 </th>
+                            <th> 备注 </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                        {%for data in data_list %}
+                        <tr>
+                            <td> {{data.city}} </td>
+                            <td> {{data.line_name}} </td>
+                            <td> {{data.mileage}} </td>
+                            <td> {{data.marshalling_ext}} </td>
+                            <td> {{data.max_speed}} </td>
+                            <td> {{format_date(data.opening_time)}} </td>
+                            <td> {{data.invertment}} </td>
+                            <td> {{data.remark}} </td>
+                        </tr>
+                        {% endfor %}
+				</tbody>
+			</table>
+		</div>
+    </div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}

@@ -114,6 +114,13 @@ def today():
     return dt
 
 
+def format_date(time):
+    if time:
+        return time.strftime('%Y-%m-%d')
+    else:
+        return "-"
+
+
 class Timer:
     def __init__(self, title):
         self.title = title

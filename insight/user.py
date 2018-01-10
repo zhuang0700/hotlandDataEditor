@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 
+from insight.dao import data_editor_dao
+
 __author__ = 'weiwenliang'
 import os
 import sys
@@ -18,7 +20,8 @@ from flask import session, redirect, render_template
 
 
 def validate(username, input_password):
-    return True
+    user = data_editor_dao.get_by_username_and_password(username, input_password)
+    return user
     # try:
     #     password, privileges = user_info.get(username)
     #     return password is not None and password == input_password

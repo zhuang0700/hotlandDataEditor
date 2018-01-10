@@ -11,7 +11,7 @@ __date__ = "17/2/22 下午4:46"
 
 
 app = Flask(__name__)
-app.config.from_object('ad_config')
+app.config.from_object('config')
 
 db = SQLAlchemy(app)
 
