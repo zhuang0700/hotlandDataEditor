@@ -49,14 +49,19 @@
 {#                    </li>#}
 {#                </ul>#}
 {#            {% endif %}#}
-            <ul class="nav navbar-nav" style="float: right">
-                <li><a href="/railway/list">db测试</a></li>
+            <ul class="nav navbar-nav">
+                <li><a href="/railway/list">线路概览</a></li>
             </ul>
-
-            <div class="nav navbar-nav" style="float: right">
+            <ul class="nav navbar-nav" style="float: right">
+                <li>
                 <a href="/logout">退出</a>
-            </div>
-
+                </li>
+            </ul>
+            <ul class="nav navbar-nav" style="float: right">
+                <li>
+                    <a href="#">欢迎，{{ username }}</a>
+                </li>
+            </ul>
         </div>
         <!--
         <div class="span12">
