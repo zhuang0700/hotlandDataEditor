@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import json
+import os
 
 from flask import request, redirect, render_template, make_response, session, jsonify
 
@@ -81,13 +82,18 @@ def railway_list():
     return render_template('railway_list.html', data_list=railway_list)
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/railway/admin/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        f = request.files['excel_file']
-        f.save('uploaded_file.xlsx')
+        f = request.files['excelFile']
+        filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
+        f.save(os.path.join(filePath), f.filename)
     return render_template('index.html')
 
+
+@app.route('/railway/admin/import')
+def railway_import():
+    return render_template('admin/import.html')
 
 # @app.route('/')
 # def index():
