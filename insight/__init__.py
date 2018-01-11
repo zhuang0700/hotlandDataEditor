@@ -14,6 +14,7 @@ import sys
 basedir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(basedir + '/../')
 
+
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -24,6 +25,7 @@ import threading
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.config['RAILWAY_EXCEL_UPLOAD_FOLDER'] = os.path.join(basedir, '../file/excel/')
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
