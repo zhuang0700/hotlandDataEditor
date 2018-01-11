@@ -87,7 +87,7 @@ def upload_file():
     if request.method == 'POST':
         f = request.files['excelFile']
         filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
-        f.save(os.path.join(filePath, "tempExcel.xlsx"), f.filename)
+        f.save(os.path.join(filePath, "tempExcel.xlsx"))
     return render_template('index.html')
 
 
