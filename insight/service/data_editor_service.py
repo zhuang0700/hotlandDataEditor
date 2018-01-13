@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from insight.utils.railway_excel_namemap import railway_namemap
+from insight.util.railway_excel_namemap import railway_namemap
 
 __author__ = 'weiwenliang'
 import sys
