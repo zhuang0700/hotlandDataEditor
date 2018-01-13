@@ -15,6 +15,7 @@ import flask_excel as excel
 import pyexcel_xls
 
 from insight.dao import data_editor_dao
+from insight.service import data_editor_service
 
 __author__ = 'weiwenliang'
 
@@ -89,6 +90,12 @@ def upload_file():
         filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
         f.save(os.path.join(filePath, "tempExcel.xlsx"))
     return render_template('index.html')
+
+
+@app.route('/railway/admin/import')
+def railway_import():
+    data_editor_service.parse_excel("../tempExcel.xlsx")
+    return render_template('admin/import.html')
 
 
 @app.route('/railway/admin/import')

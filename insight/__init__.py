@@ -35,7 +35,7 @@ db = SQLAlchemy(app)
 # Session = sessionmaker(bind=engine)
 # session = Session(autoflush=False)
 
-app.jinja_env.add_extension("chartkick.ext.charts")
+# app.jinja_env.add_extension("chartkick.ext.charts")
 
 from insight import views
 
