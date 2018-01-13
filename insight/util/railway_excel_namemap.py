@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import sys
 
 railway_namemap = {
     u"线路": "line_name",
@@ -7,3 +10,13 @@ railway_namemap = {
     u"开通时间": "open_time",
     u"备注": "remark"
 }
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
+    main()

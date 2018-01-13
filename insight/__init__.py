@@ -5,7 +5,6 @@ import socket
 import datetime
 
 from insight.config import BEFORE_DAYS
-from insight.util import Timer
 
 __author__ = 'weiwenliang'
 import os

@@ -14,7 +14,7 @@ def parse_excel(excel_path):
     sheets = xls_data.keys()
     first_sheet = xls_data[sheets[0]]
     head_line = first_sheet[0]
-    head_column_list = parse_head_list()
+    head_column_list = parse_head_list(head_line)
     print(head_column_list)
 
 

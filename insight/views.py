@@ -8,7 +8,7 @@ from flask import request, redirect, render_template, make_response, session, js
 
 import user
 from config import BEFORE_DAYS
-from insight import app, util
+from insight import app, utils
 import sys
 
 import flask_excel as excel
@@ -22,15 +22,8 @@ __author__ = 'weiwenliang'
 
 @app.context_processor
 def utility_processor():
-    return dict(format_percent=util.format_percent,
-                format_ecpm=util.format_ecpm,
-                format_big_num=util.format_big_num,
-                format_float=util.format_float,
-                format_float_num=util.format_float_num,
-                format_rate=util.format_rate,
-                format_si_to_yuan=util.format_si_to_yuan,
-                visitable=lambda view_id: user.visitable(session["username"], view_id),
-                format_date=util.format_date)
+    return dict(visitable=lambda view_id: user.visitable(session["username"], view_id),
+                format_date=utils.format_date)
 
 
 @app.before_request
