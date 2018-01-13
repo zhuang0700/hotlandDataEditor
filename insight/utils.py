@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import time
+# import time
 
 __author__ = 'weiwenliang'
 import os
@@ -10,7 +10,7 @@ import sys
 
 sys.path.append(basedir + '/../')
 
-from datetime import datetime
+# from datetime import datetime
 
 
 def format_percent(numerator, denominator):
@@ -104,14 +104,14 @@ def is_v2_ad(id):
     return id >= 100000000
 
 
-def today():
-    """
-    datetime.datetime(y, m, d, 0, 0, 0, 0) != datetime.date(y, m, d)
-    :return: return today in datetime type instead of date type
-    """
-    dt = datetime.now()
-    dt = dt.replace(dt.year, dt.month, dt.day, 0, 0, 0, 0)
-    return dt
+# def today():
+#     """
+#     datetime.datetime(y, m, d, 0, 0, 0, 0) != datetime.date(y, m, d)
+#     :return: return today in datetime type instead of date type
+#     """
+#     dt = datetime.now()
+#     dt = dt.replace(dt.year, dt.month, dt.day, 0, 0, 0, 0)
+#     return dt
 
 
 def format_date(time):
@@ -121,28 +121,28 @@ def format_date(time):
         return "-"
 
 
-class Timer:
-    def __init__(self, title):
-        self.title = title
-        self.counter = {}
-        self.timer = time.time()
-
-    def step(self, name, is_print):
-        current = time.time()
-        if name not in self.counter:
-            self.counter[name] = [current - self.timer, 1]
-        else:
-            self.counter[name][0] += current - self.timer
-            self.counter[name][1] += 1
-        if is_print:
-            self.print_one(name)
-        self.timer = current
-
-    def print_one(self, name):
-        print >> sys.stderr, "step [%s].[%s]: use %.2f sec in %d times, %.2f sec average." % (
-            self.title, name, self.counter[name][0], self.counter[name][1],
-            self.counter[name][0] / self.counter[name][1])
-
-    def print_all(self):
-        for name in self.counter.keys():
-            self.print_one(name)
+# class Timer:
+#     def __init__(self, title):
+#         self.title = title
+#         self.counter = {}
+#         self.timer = time.time()
+#
+#     def step(self, name, is_print):
+#         current = time.time()
+#         if name not in self.counter:
+#             self.counter[name] = [current - self.timer, 1]
+#         else:
+#             self.counter[name][0] += current - self.timer
+#             self.counter[name][1] += 1
+#         if is_print:
+#             self.print_one(name)
+#         self.timer = current
+#
+#     def print_one(self, name):
+#         print >> sys.stderr, "step [%s].[%s]: use %.2f sec in %d times, %.2f sec average." % (
+#             self.title, name, self.counter[name][0], self.counter[name][1],
+#             self.counter[name][0] / self.counter[name][1])
+#
+#     def print_all(self):
+#         for name in self.counter.keys():
+#             self.print_one(name)
