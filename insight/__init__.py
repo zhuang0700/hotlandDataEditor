@@ -35,11 +35,6 @@ db = SQLAlchemy(app)
 # Session = sessionmaker(bind=engine)
 # session = Session(autoflush=False)
 
-<<<<<<< HEAD
-=======
-# app.jinja_env.add_extension("chartkick.ext.charts")
-
->>>>>>> 7f56121d1d1eacedccef210c0d0cfe6213cd8a62
 from insight import views
 
 print >> sys.stderr, "start app success"

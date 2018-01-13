@@ -94,7 +94,7 @@ def upload_file():
 
 @app.route('/railway/admin/import')
 def railway_import():
-    data_editor_service.parse_excel("../tempExcel.xlsx")
+    data_editor_service.parse_excel("../file/excel/tempExcel.xlsx")
     return render_template('admin/import.html')
 
 
