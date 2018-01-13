@@ -34,8 +34,8 @@ def convert_data_into_railway(data_line, head_column_list):
     print(data_line)
     print(head_column_list)
     for i, data in enumerate(data_line):
-	if i < len(head_colunm_list):
-       	    column = head_column_list[i]
+        if i < len(head_column_list):
+            column = head_column_list[i]
             if column:
                 railwayLine.__setattr__(column, data_line)
     return railwayLine
