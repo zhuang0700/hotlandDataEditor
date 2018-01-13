@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from insight.utils.railway_excel_namemap import railway_namemap
 
 __author__ = 'weiwenliang'
 import sys
@@ -12,7 +13,17 @@ def parse_excel(excel_path):
     xls_data = get_data(excel_path)
     sheets = xls_data.keys()
     first_sheet = xls_data[sheets[0]]
-    print(first_sheet)
+    head_line = first_sheet[0]
+    head_column_list = parse_head_list()
+    print(head_column_list)
+
+
+def parse_head_list(head_line):
+    head_column_list = []
+    for head in head_line:
+        head_column_name = railway_namemap.get(head, "")
+        head_column_list.append(head_column_name)
+    return head_column_list
 
 
 def main():
