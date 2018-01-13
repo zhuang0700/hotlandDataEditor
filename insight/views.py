@@ -98,10 +98,6 @@ def railway_import():
     return render_template('admin/import.html')
 
 
-@app.route('/railway/admin/import')
-def railway_import():
-    return render_template('admin/import.html')
-
 # @app.route('/')
 # def index():
 #    return render_template('index.html', welcome='Welcome')

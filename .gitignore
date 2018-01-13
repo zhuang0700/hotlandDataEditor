@@ -127,3 +127,5 @@ target/
 
 data_quality/dq.result.*
 data_quality/dq.effect.*
+
+file/*
