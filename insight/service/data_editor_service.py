@@ -16,8 +16,10 @@ def parse_excel(excel_path):
     first_sheet = xls_data[sheets[0]]
     head_line = first_sheet[0]
     head_column_list = parse_head_list(head_line)
+    railway_line_list = []
     for data_line in first_sheet[1:]:
         railway_line = convert_data_into_railway(data_line, head_column_list)
+        railway_line_list.append(railway_line)
         print(railway_line)
 
 
@@ -38,6 +40,7 @@ def convert_data_into_railway(data_line, head_column_list):
             column = head_column_list[i]
             if column:
                 railwayLine.__setattr__(column, data_line)
+
     return railwayLine
 
 

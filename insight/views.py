@@ -82,6 +82,7 @@ def upload_file():
         f = request.files['excelFile']
         filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
         f.save(os.path.join(filePath, "tempExcel.xlsx"))
+        data_editor_service.parse_excel(os.path.join(filePath, "tempExcel.xlsx"))
     return render_template('index.html')
 
 

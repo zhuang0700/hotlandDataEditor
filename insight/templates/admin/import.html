@@ -28,30 +28,34 @@
     </form>
     <div class="container-fluid">
         <div class="row-fluid">
-{#                <table class="table table-bordered table-hover" >#}
-{#                    <thead>#}
-{#                        <tr>#}
-{#                            <th> 客户名称 </th>#}
-{#                            <th> 消费(万) </th>#}
-{#                            <th> 曝光量(万) </th>#}
-{#                            <th> 下载量(万) </th>#}
-{#                            <th> eCPM(元) </th>#}
-{#                            <th> 历史详情 </th>#}
-{#                        </tr>#}
-{#                    </thead>#}
-{#                  <tbody>#}
-{#                        {%for data in data_list %}#}
-{#                        <tr>#}
-{#                            <td> {{data.name}} </td>#}
-{#                            <td> {{format_big_num(data.consume)}} </td>#}
-{#                            <td> {{format_big_num(data.impression)}} </td>#}
-{#                            <td> {{format_big_num(data.start_download)}} </td>#}
-{#                            <td> {{format_ecpm(data.consume, data.impression)}} </td>#}
-{#                            <td> <a href="/{{category_id}}/history/{{data.id}}">历史趋势</a> </td>#}
-{#                        </tr>#}
-{#                        {% endfor %}#}
-{#				</tbody>#}
-{#			</table>#}
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th> 城市 </th>
+                            <th> 线路 </th>
+                            <th> 里程 </th>
+                            <th> 车型及编组 </th>
+                            <th> 最高运行速度 </th>
+                            <th> 开通时间 </th>
+                            <th> 工程投资 </th>
+                            <th> 备注 </th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                        {%for data in data_list %}
+                        <tr>
+                            <td> {{data.city}} </td>
+                            <td> {{data.line_name}} </td>
+                            <td> {{data.mileage}} </td>
+                            <td> {{data.marshalling_ext}} </td>
+                            <td> {{data.max_speed}} </td>
+                            <td> {{format_date(data.opening_time)}} </td>
+                            <td> {{data.invertment}} </td>
+                            <td> {{data.remark}} </td>
+                        </tr>
+                        {% endfor %}
+				</tbody>
+			</table>
 		</div>
     </div>
 </div>

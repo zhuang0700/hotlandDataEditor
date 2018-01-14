@@ -36,6 +36,6 @@ class RailwayLine(db.Model):
     gmt_modified = db.Column(db.DateTime)
     gmt_created = db.Column(db.DateTime)
 
-    def __repr__(self):
-        return 'RailwayLine: (%d %s %s %s %s %d %f %s %s)' % (
-            self.id, self.line_name, self.city, self.city_code, self.train_type, self.mileage, self.gmt_created, self.gmt_modified)
+    # def __repr__(self):
+    #     return 'RailwayLine: (%d %s %s %s %s %d %f %s %s)' % (
+    #         self.id, self.line_name, self.city, self.city_code, self.train_type, self.mileage, self.gmt_created, self.gmt_modified)
