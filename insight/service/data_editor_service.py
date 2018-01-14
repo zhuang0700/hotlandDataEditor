@@ -21,6 +21,7 @@ def parse_excel(excel_path):
         railway_line = convert_data_into_railway(data_line, head_column_list)
         railway_line_list.append(railway_line)
         print(railway_line)
+    return railway_line_list
 
 
 def parse_head_list(head_line):
@@ -39,7 +40,7 @@ def convert_data_into_railway(data_line, head_column_list):
         if i < len(head_column_list):
             column = head_column_list[i]
             if column:
-                railwayLine.__setattr__(column, data_line)
+                railwayLine.__setattr__(column, data_line[i])
 
     return railwayLine
 

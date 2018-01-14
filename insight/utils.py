@@ -121,6 +121,16 @@ def format_date(time):
         return "-"
 
 
+def convert_object_to_dict(obj_list):
+    dict_list = []
+    if obj_list:
+        for obj in obj_list:
+            obj_dict = obj.__dict__
+            del obj_dict["_sa_instance_state"]
+            dict_list.append(obj_dict)
+    return dict_list
+
+
 # class Timer:
 #     def __init__(self, title):
 #         self.title = title

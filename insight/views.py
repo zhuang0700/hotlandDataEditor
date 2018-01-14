@@ -5,6 +5,7 @@ import json
 import os
 
 from flask import request, redirect, render_template, make_response, session, jsonify
+import insight.utils as util
 
 import user
 from config import BEFORE_DAYS
@@ -79,8 +80,9 @@ def railway_list():
 def show_import_data():
     filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
     railway_list = data_editor_service.parse_excel(os.path.join(filePath, "tempExcel.xlsx"))
-    railway_dict = railway_list.__dict__;
-    return json.JSONEncoder.encode(railway_dict)
+    railway_dict = util.convert_object_to_dict(railway_list)
+    resp = dict(ret=True, data=railway_dict)
+    return json.dumps(resp)
 
 
 @app.route('/railway/admin/upload', methods=['GET', 'POST'])
@@ -94,7 +96,6 @@ def upload_file():
 
 @app.route('/railway/admin/import')
 def railway_import():
-    data_editor_service.parse_excel("../file/excel/tempExcel.xlsx")
     return render_template('admin/import.html')
 
 
