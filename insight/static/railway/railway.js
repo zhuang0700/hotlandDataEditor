@@ -1,4 +1,4 @@
-$("#showImportData").onclick(function (event) {
+$("#showImportData").on('click',function (event) {
     show_import_data(event)
 });
 
