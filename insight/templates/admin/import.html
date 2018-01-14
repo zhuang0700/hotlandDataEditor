@@ -51,7 +51,9 @@
     </div>
 
 	{% block scripts %}
-	    <script src="{{ url_for('static', filename = 'diagnose/railway.js') }}"></script>
+        {{  super() }}
+        <script src="{{ url_for('static', filename = 'jquery-2.2.4.min.js') }}"></script>
+	    <script src="{{ url_for('static', filename = 'railway/railway.js') }}"></script>
 	{% endblock %}
 
 {% endif %}
