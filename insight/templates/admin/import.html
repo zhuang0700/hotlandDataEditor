@@ -18,49 +18,41 @@
            padding: 0;
        }
     </style>
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">{{category_name}}-{{date}}</div>
-    <div class="panel-body"> <p></p></div>
-    <!-- Table -->
-    <form enctype="multipart/form-data" action="/railway/admin/upload" method=post>
-        <input type="file" id="uploadFile" name="excelFile" /><input type="submit" value="上传" />
-    </form>
-    <div class="container-fluid">
-        <div class="row-fluid">
-                <table class="table table-bordered table-hover" >
-                    <thead>
-                        <tr>
-                            <th> 城市 </th>
-                            <th> 线路 </th>
-                            <th> 里程 </th>
-                            <th> 车型及编组 </th>
-                            <th> 最高运行速度 </th>
-                            <th> 开通时间 </th>
-                            <th> 工程投资 </th>
-                            <th> 备注 </th>
-                        </tr>
-                    </thead>
-                  <tbody>
-                        {%for data in data_list %}
-                        <tr>
-                            <td> {{data.city}} </td>
-                            <td> {{data.line_name}} </td>
-                            <td> {{data.mileage}} </td>
-                            <td> {{data.marshalling_ext}} </td>
-                            <td> {{data.max_speed}} </td>
-                            <td> {{format_date(data.opening_time)}} </td>
-                            <td> {{data.invertment}} </td>
-                            <td> {{data.remark}} </td>
-                        </tr>
-                        {% endfor %}
-				</tbody>
-			</table>
-		</div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{category_name}}-{{date}}</div>
+        <div class="panel-body"> <p></p></div>
+        <!-- Table -->
+        <form enctype="multipart/form-data" action="/railway/admin/upload" method=post>
+            <input type="file" id="uploadFile" name="excelFile" /><input type="submit" value="上传" />
+        </form>
+        <input type="button" id="showImportData" name="showImportData" />
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <th> 城市 </th>
+                                <th> 线路 </th>
+                                <th> 里程 </th>
+                                <th> 车型及编组 </th>
+                                <th> 最高运行速度 </th>
+                                <th> 开通时间 </th>
+                                <th> 工程投资 </th>
+                                <th> 备注 </th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+
+                        </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 
-
+	{% block scripts %}
+	    <script src="{{ url_for('static', filename = 'diagnose/railway.js') }}"></script>
+	{% endblock %}
 
 {% endif %}
 {% endblock %}

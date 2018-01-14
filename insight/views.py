@@ -11,7 +11,6 @@ from config import BEFORE_DAYS
 from insight import app, utils
 import sys
 
-import flask_excel as excel
 import pyexcel_xls
 
 from insight.dao import data_editor_dao
@@ -76,13 +75,20 @@ def railway_list():
     return render_template('railway_list.html', data_list=railway_list)
 
 
+@app.route("/api/railway/show_import_data")
+def show_import_data():
+    filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
+    railway_list = data_editor_service.parse_excel(os.path.join(filePath, "tempExcel.xlsx"))
+    railway_dict = railway_list.__dict__;
+    return json.JSONEncoder.encode(railway_dict)
+
+
 @app.route('/railway/admin/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         f = request.files['excelFile']
         filePath = app.config['RAILWAY_EXCEL_UPLOAD_FOLDER']
         f.save(os.path.join(filePath, "tempExcel.xlsx"))
-        data_editor_service.parse_excel(os.path.join(filePath, "tempExcel.xlsx"))
     return render_template('index.html')
 
 
